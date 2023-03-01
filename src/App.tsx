@@ -8,11 +8,15 @@ import Navbar from './components/Navbar';
 function App() {
   return (
     <Box>
-      <Navbar />
-      <Stack direction='row' spacing={2} justifyContent='space-between'>
-
-      <Sidebar />
-      <Main />
+      {/* <Navbar /> */}
+      <Stack
+        direction="row"
+        spacing={2}
+        justifyContent="space-between"
+        height="100vh"
+      >
+        <Sidebar />
+        <Main />
       </Stack>
     </Box>
   );

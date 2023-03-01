@@ -6,7 +6,7 @@ import {
   ListItemText,
   ListItemIcon,
 } from '@mui/material';
-import { useTheme } from '@mui/system';
+import { useTheme } from '@mui/material/styles';
 import HotelIcon from '@mui/icons-material/Hotel';
 import CategoryIcon from '@mui/icons-material/Category';
 
@@ -14,7 +14,7 @@ const Sidebar = () => {
   const theme = useTheme();
   return (
     <Box
-      // bgcolor={theme.palette}
+      bgcolor={theme.palette.primary.main}
       flex={1}
       p={2}
       sx={{ display: { xs: 'none', sm: 'block' } }}
