@@ -5,39 +5,39 @@ import {
   ListItemButton,
   ListItemText,
   ListItemIcon,
+  Paper,
 } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 import HotelIcon from '@mui/icons-material/Hotel';
 import CategoryIcon from '@mui/icons-material/Category';
 
 const Sidebar = () => {
-  const theme = useTheme();
   return (
     <Box
-      bgcolor={theme.palette.primary.main}
-      flex={1}
+      width="20%"
       p={2}
-      sx={{ display: { xs: 'none', sm: 'block' } }}
+      sx={{ display: { xs: 'none', sm: 'block' }, height: '100%' }}
     >
-      <List>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <HotelIcon />
-            </ListItemIcon>
-            <ListItemText primary="Hotels" />
-          </ListItemButton>
-        </ListItem>
+      <Paper elevation={0} sx={{ maxWidth: 256 }}>
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <HotelIcon />
+              </ListItemIcon>
+              <ListItemText primary="Hotels" />
+            </ListItemButton>
+          </ListItem>
 
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <CategoryIcon />
-            </ListItemIcon>
-            <ListItemText primary="Categories" />
-          </ListItemButton>
-        </ListItem>
-      </List>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <CategoryIcon />
+              </ListItemIcon>
+              <ListItemText primary="Categories" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Paper>
     </Box>
   );
 };
