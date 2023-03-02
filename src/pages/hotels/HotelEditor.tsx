@@ -29,7 +29,7 @@ const HotelEditor = ({ open, handleClose, data }: IProps) => {
     ICategory | null | undefined
   >(null);
   const { addNewHotel, editExistingHotel } = useHotels();
-  const { categories } = useCategories();
+  const { categories, getCategory } = useCategories();
 
   const handleHotelNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -49,14 +49,14 @@ const HotelEditor = ({ open, handleClose, data }: IProps) => {
         ...data,
         name: hotelName,
         address: hotelAddress,
-        category: hotelCategory,
+        category: hotelCategory?.id,
       });
     } else {
       addNewHotel({
         name: hotelName,
         address: hotelAddress,
         id: uuidv4(),
-        category: hotelCategory,
+        category: hotelCategory?.id,
       });
     }
     handleClose();
@@ -64,13 +64,23 @@ const HotelEditor = ({ open, handleClose, data }: IProps) => {
     setHotelAddress('');
     setHotelCategory(null);
   };
+  const reset = () => {
+    setHotelName('');
+    setHotelAddress('');
+    setHotelCategory(null);
+  };
+  const closeModal = () => {
+    reset();
+    handleClose();
+  };
 
   useEffect(() => {
     if (data) {
       setHotelName(data.name);
       setHotelAddress(data.address);
-      setHotelCategory(data?.category);
+      setHotelCategory(getCategory(data?.category || ''));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return (
@@ -123,7 +133,7 @@ const HotelEditor = ({ open, handleClose, data }: IProps) => {
           alignItems="end"
           width="100%"
         >
-          <Button variant="outlined" color="primary" onClick={handleClose}>
+          <Button variant="outlined" color="primary" onClick={closeModal}>
             Cancel
           </Button>
           <Button

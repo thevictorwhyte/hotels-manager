@@ -23,11 +23,21 @@ const useCategories = () => {
     dispatch(deleteCategory(category));
   };
 
+  const getCategory = (id: string | null | undefined) => {
+    if (!id) return null;
+    const category = categories.find((category) => category.id === id);
+    if (category) {
+      return category;
+    }
+    return null;
+  };
+
   return {
     categories,
     addNewCategory,
     editExistingCategory,
     deleteExistingCategory,
+    getCategory,
   };
 };
 

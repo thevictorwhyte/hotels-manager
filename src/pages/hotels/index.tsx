@@ -20,6 +20,7 @@ import {
 import HotelEditor from './HotelEditor';
 
 import useHotels from '../../hooks/hotels/useHotels';
+import useCategories from '../../hooks/categories/useCategories';
 
 import { SelectChangeEvent } from '@mui/material/Select';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -134,6 +135,7 @@ const Hotel = ({
 }: IHotelProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const { getCategory } = useCategories();
 
   const handleClickVertIcon = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -179,7 +181,8 @@ const Hotel = ({
         <CardActionArea>
           <CardContent>
             <Typography variant="body2" color="text.secondary">
-              Category: {hotel.category?.name || 'No category available'}
+              Category:{' '}
+              {getCategory(hotel?.category)?.name || 'No category available'}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Address: {hotel.address}
