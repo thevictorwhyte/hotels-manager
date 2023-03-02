@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
+import { style } from '../hotels/HotelEditor';
 import { Box, Button, Modal, TextField } from '@mui/material';
 import useCategories from '../../hooks/categories/useCategories';
 import { ICategory } from '../../redux/categories/typings';
@@ -82,22 +82,6 @@ const CategoryEditor = ({ open, handleClose, data }: IProps) => {
       </Box>
     </Modal>
   );
-};
-
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  flexDirection: 'column',
 };
 
 export default CategoryEditor;

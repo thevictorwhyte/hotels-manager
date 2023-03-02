@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   Box,
-  Stack,
   Grid,
   Button,
   Card,
@@ -29,7 +28,7 @@ const Categories = () => {
   const { categories, deleteExistingCategory } = useCategories();
 
   return (
-    <Box p={4} sx={{ flexGrow: 1, maxWidth: 1000 }}>
+    <Box sx={{ flexGrow: 1, maxWidth: 1000, padding: { xs: 2, md: 4 } }}>
       {!categories.length ? (
         <EmptyState
           message="You have not created any category"
@@ -39,31 +38,27 @@ const Categories = () => {
           }}
         />
       ) : (
-        <Stack direction="column" spacing={2} width="100%">
-          <Grid container spacing={2}>
-            <Grid item md={12}>
-              {' '}
-              <Button
-                variant="contained"
-                onClick={() => setModal({ data: null, open: true })}
-              >
-                Add New Category
-              </Button>
-            </Grid>
-            {categories.map((category) => {
-              return (
-                <Category
-                  key={category.id}
-                  category={category}
-                  onMenuItemClick={() =>
-                    setModal({ data: category, open: true })
-                  }
-                  deleteExistingCategory={deleteExistingCategory}
-                />
-              );
-            })}
+        <Grid container spacing={2}>
+          <Grid item md={12}>
+            {' '}
+            <Button
+              variant="contained"
+              onClick={() => setModal({ data: null, open: true })}
+            >
+              Add New Category
+            </Button>
           </Grid>
-        </Stack>
+          {categories.map((category) => {
+            return (
+              <Category
+                key={category.id}
+                category={category}
+                onMenuItemClick={() => setModal({ data: category, open: true })}
+                deleteExistingCategory={deleteExistingCategory}
+              />
+            );
+          })}
+        </Grid>
       )}
 
       <CategoryEditor
@@ -103,7 +98,7 @@ const Category = ({
   };
 
   return (
-    <Grid md={6} item>
+    <Grid xs={12} lg={6} item>
       <Card elevation={2}>
         <CardHeader
           action={

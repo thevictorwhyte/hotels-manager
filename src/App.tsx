@@ -1,16 +1,16 @@
-import React from 'react';
 import { Box, Paper, Stack } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
 
 import { routes as appRoutes } from './routes';
 
+import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 
 function App() {
   return (
     <Paper sx={{ borderRadius: '0px' }}>
-      <Box height="100vh">
-        {/* <Navbar /> */}
+      <Box height="100%">
+        <Navbar />
         <Stack
           direction="row"
           spacing={2}

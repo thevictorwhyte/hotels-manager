@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
   Typography,
   styled,
-  Avatar,
   Menu,
   MenuItem,
 } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import { routes } from '../routes';
 
 const StyledToolbar = styled(Toolbar)({
   display: 'flex',
@@ -16,13 +18,15 @@ const StyledToolbar = styled(Toolbar)({
 });
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ display: { xs: 'block', lg: 'none' } }}>
       <StyledToolbar>
         <Typography>Hotels Manager</Typography>
-        <Avatar onClick={() => setOpen(true)} />
+        <MenuIcon onClick={() => setOpen(true)} />
       </StyledToolbar>
       <Menu
         id="demo-positioned-menu"
@@ -38,9 +42,16 @@ const Navbar = () => {
           horizontal: 'right',
         }}
       >
-        <MenuItem>Profile</MenuItem>
-        <MenuItem>My account</MenuItem>
-        <MenuItem>Logout</MenuItem>
+        {routes.map((route) => {
+          return (
+            <MenuItem
+              onClick={() => navigate(`${route.path}`)}
+              selected={location.pathname === route.path}
+            >
+              {route.title}
+            </MenuItem>
+          );
+        })}
       </Menu>
     </AppBar>
   );

@@ -14,7 +14,8 @@ function EmptyState({ message, buttonText, onButtonClick }: EmptyStateProps) {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      height="100%"
+      gap={2}
+      height="80%"
     >
       <AddBox fontSize="large" color="action" />
       <Typography variant="h6" color="textSecondary">

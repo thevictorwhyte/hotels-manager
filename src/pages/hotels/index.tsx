@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import {
   Box,
-  Stack,
   Grid,
   FormControl,
   InputLabel,
@@ -37,13 +36,21 @@ const Hotels = () => {
     open: false,
   });
   const { hotelsList, deleteExistingHotel } = useHotels();
+  const { categories } = useCategories();
 
   const handleChange = (event: SelectChangeEvent) => {
     setCategory(event.target.value as string);
   };
 
   return (
-    <Box p={4} sx={{ flexGrow: 1, maxWidth: 1000 }}>
+    <Box
+      sx={{
+        flexGrow: 1,
+        maxWidth: 1000,
+        width: '100%',
+        padding: { xs: 2, md: 4 },
+      }}
+    >
       {!hotelsList.length ? (
         <EmptyState
           message="You have not created any hotel"
@@ -53,59 +60,91 @@ const Hotels = () => {
           }}
         />
       ) : (
-        <Stack direction="column" spacing={2} width="100%">
-          <Grid container spacing={2}>
-            <Grid item md={6}>
-              <FormControl sx={{ width: '200px' }}>
-                <InputLabel id="demo-simple-select-label">
-                  Filter by category
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={category}
-                  label="Categories"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={10}>1 Star</MenuItem>
-                  <MenuItem value={20}>2 Star</MenuItem>
-                  <MenuItem value={30}>3 Star</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-
-            <Grid display="flex" justifyContent="right" item md={6}>
-              <Box>
-                <Button
-                  variant="contained"
-                  onClick={() =>
-                    setModal({
-                      data: null,
-                      open: true,
-                    })
-                  }
-                >
-                  Add New Hotel
-                </Button>
-              </Box>
-            </Grid>
-            {hotelsList.map((hotel) => {
-              return (
-                <Hotel
-                  key={hotel.id}
-                  onMenuItemClick={() =>
-                    setModal({
-                      data: hotel,
-                      open: true,
-                    })
-                  }
-                  deleteExistingHotel={deleteExistingHotel}
-                  hotel={hotel}
-                />
-              );
-            })}
+        <Grid container spacing={2}>
+          <Grid
+            justifyContent="right"
+            alignItems="start"
+            item
+            xs={12}
+            md={6}
+            sx={{ display: { xs: 'flex', lg: 'none' } }}
+          >
+            <Box>
+              <Button
+                variant="contained"
+                onClick={() =>
+                  setModal({
+                    data: null,
+                    open: true,
+                  })
+                }
+              >
+                Add New Hotel
+              </Button>
+            </Box>
           </Grid>
-        </Stack>
+          <Grid item xs={12} md={6}>
+            <FormControl sx={{ width: { xs: '100%', lg: '200px' } }}>
+              <InputLabel id="demo-simple-select-label">
+                Group by category
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={category}
+                label="Categories"
+                onChange={handleChange}
+              >
+                {categories.map((category) => {
+                  return (
+                    <MenuItem key={category.id} value={category.id}>
+                      {category.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid
+            display="flex"
+            justifyContent="right"
+            item
+            xs={12}
+            md={6}
+            sx={{ display: { xs: 'none', lg: 'flex' } }}
+          >
+            <Box>
+              <Button
+                variant="contained"
+                onClick={() =>
+                  setModal({
+                    data: null,
+                    open: true,
+                  })
+                }
+              >
+                Add New Hotel
+              </Button>
+            </Box>
+          </Grid>
+
+          {hotelsList.map((hotel) => {
+            return (
+              <Hotel
+                key={hotel.id}
+                onMenuItemClick={() =>
+                  setModal({
+                    data: hotel,
+                    open: true,
+                  })
+                }
+                deleteExistingHotel={deleteExistingHotel}
+                hotel={hotel}
+              />
+            );
+          })}
+        </Grid>
       )}
 
       <HotelEditor
@@ -145,9 +184,8 @@ const Hotel = ({
     setAnchorEl(null);
   };
 
-  console.log('this is hotel', hotel);
   return (
-    <Grid md={6} item>
+    <Grid xs={12} md={6} item>
       <Card elevation={2}>
         <CardHeader
           action={
