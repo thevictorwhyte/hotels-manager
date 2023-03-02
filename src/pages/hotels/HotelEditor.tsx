@@ -11,9 +11,10 @@ import {
   Select,
   TextField,
 } from '@mui/material';
-import { SelectChangeEvent } from '@mui/material';
 import useHotels from '../../hooks/hotels/useHotels';
 import { IHotel } from '../../redux/hotels/typings';
+import useCategories from '../../hooks/categories/useCategories';
+import { ICategory } from '../../redux/categories/typings';
 
 interface IProps {
   open: boolean;
@@ -24,8 +25,11 @@ interface IProps {
 const HotelEditor = ({ open, handleClose, data }: IProps) => {
   const [hotelName, setHotelName] = useState('');
   const [hotelAddress, setHotelAddress] = useState('');
-  const [hotelCategory, setHotelCategory] = useState('');
+  const [hotelCategory, setHotelCategory] = useState<
+    ICategory | null | undefined
+  >(null);
   const { addNewHotel, editExistingHotel } = useHotels();
+  const { categories } = useCategories();
 
   const handleHotelNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -39,34 +43,33 @@ const HotelEditor = ({ open, handleClose, data }: IProps) => {
     setHotelAddress(event.target.value);
   };
 
-  const handleHotelCategoryChange = (event: SelectChangeEvent<string>) => {
-    setHotelCategory(event.target.value as string);
-  };
-
   const handleSave = () => {
     if (data) {
       editExistingHotel({
         ...data,
         name: hotelName,
         address: hotelAddress,
+        category: hotelCategory,
       });
     } else {
       addNewHotel({
         name: hotelName,
         address: hotelAddress,
         id: uuidv4(),
+        category: hotelCategory,
       });
     }
     handleClose();
     setHotelName('');
     setHotelAddress('');
-    setHotelCategory('');
+    setHotelCategory(null);
   };
 
   useEffect(() => {
     if (data) {
       setHotelName(data.name);
       setHotelAddress(data.address);
+      setHotelCategory(data?.category);
     }
   }, [data]);
 
@@ -94,16 +97,22 @@ const HotelEditor = ({ open, handleClose, data }: IProps) => {
           <Select
             labelId="hotel-category-label"
             id="hotel-category"
-            value={hotelCategory}
+            value={hotelCategory?.id || ''}
             sx={{ width: '100%' }}
-            onChange={handleHotelCategoryChange}
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value="Luxury">Luxury</MenuItem>
-            <MenuItem value="Mid-Range">Mid-Range</MenuItem>
-            <MenuItem value="Budget">Budget</MenuItem>
+            {categories.map((category) => {
+              return (
+                <MenuItem
+                  key={category.id}
+                  value={category.id}
+                  onClick={() => {
+                    setHotelCategory(category);
+                  }}
+                >
+                  {category.name}
+                </MenuItem>
+              );
+            })}
           </Select>
         </FormControl>
         <br />
@@ -117,7 +126,12 @@ const HotelEditor = ({ open, handleClose, data }: IProps) => {
           <Button variant="outlined" color="primary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="contained" color="primary" onClick={handleSave}>
+          <Button
+            disabled={!hotelName || !hotelAddress || !hotelCategory}
+            variant="contained"
+            color="primary"
+            onClick={handleSave}
+          >
             Save
           </Button>
         </Box>

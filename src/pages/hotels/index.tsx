@@ -143,6 +143,7 @@ const Hotel = ({
     setAnchorEl(null);
   };
 
+  console.log('this is hotel', hotel);
   return (
     <Grid md={6} item>
       <Card elevation={2}>
@@ -177,6 +178,9 @@ const Hotel = ({
         />
         <CardActionArea>
           <CardContent>
+            <Typography variant="body2" color="text.secondary">
+              Category: {hotel.category?.name || 'No category available'}
+            </Typography>
             <Typography variant="body2" color="text.secondary">
               Address: {hotel.address}
             </Typography>

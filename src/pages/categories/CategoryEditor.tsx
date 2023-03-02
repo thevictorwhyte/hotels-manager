@@ -70,7 +70,12 @@ const CategoryEditor = ({ open, handleClose, data }: IProps) => {
           <Button variant="outlined" color="primary" onClick={closeModal}>
             Cancel
           </Button>
-          <Button variant="contained" color="primary" onClick={handleSave}>
+          <Button
+            variant="contained"
+            disabled={!categoryName}
+            color="primary"
+            onClick={handleSave}
+          >
             Save
           </Button>
         </Box>
