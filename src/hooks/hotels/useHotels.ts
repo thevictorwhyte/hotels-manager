@@ -11,14 +11,14 @@ interface Props {
 const useHotels = ({ categoryId }: Props) => {
   const dispatch = useDispatch();
   const hotelsList = useSelector(selectHotelsList);
-  const [groupedHotels, setGroupedHotels] = useState<IHotel[]>([]);
+  const [filteredHotels, setFilteredHotels] = useState<IHotel[]>([]);
 
   useEffect(() => {
     if (categoryId) {
       const _hotels = hotelsList.filter(
         (hotel) => hotel.category === categoryId
       );
-      setGroupedHotels(_hotels);
+      setFilteredHotels(_hotels);
     }
   }, [categoryId, hotelsList]);
 
@@ -35,7 +35,7 @@ const useHotels = ({ categoryId }: Props) => {
   };
 
   return {
-    hotelsList: categoryId ? groupedHotels : hotelsList,
+    hotelsList: categoryId ? filteredHotels : hotelsList,
     addNewHotel,
     deleteExistingHotel,
     editExistingHotel,

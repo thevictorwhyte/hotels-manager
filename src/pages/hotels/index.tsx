@@ -88,12 +88,12 @@ const Hotels = () => {
           <Grid item xs={12} md={6}>
             <FormControl sx={{ width: { xs: '100%', lg: '200px' } }}>
               <InputLabel id="demo-simple-select-label">
-                Group by category
+                Filter by category
               </InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={category}
+                value={category || ''}
                 label="Categories"
                 onChange={handleChange}
               >
