@@ -25,7 +25,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EmptyState from '../../components/EmptyState';
 
 const Hotels = () => {
-  const [age, setAge] = useState('');
+  const [category, setCategory] = useState('');
   const [modal, setModal] = useState({
     data: null,
     open: false,
@@ -33,7 +33,7 @@ const Hotels = () => {
   const { hotelsList } = useHotels();
 
   const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+    setCategory(event.target.value as string);
   };
 
   return (
@@ -48,14 +48,12 @@ const Hotels = () => {
         />
       ) : (
         <Stack direction="column" spacing={2} width="100%">
-          <Grid
-            container
-            spacing={2}
-            alignItems="start"
-            display="flex"
-            justifyContent="space-between"
-          >
-            <Grid item>
+          <Grid container spacing={2}>
+            <Grid
+              item
+              md={6}
+              // style={{ padding: 0, width: '100%' }}
+            >
               <FormControl sx={{ width: '200px' }}>
                 <InputLabel id="demo-simple-select-label">
                   Filter by category
@@ -63,7 +61,7 @@ const Hotels = () => {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={age}
+                  value={category}
                   label="Categories"
                   onChange={handleChange}
                 >
@@ -74,25 +72,29 @@ const Hotels = () => {
               </FormControl>
             </Grid>
 
-            <Grid item>
-              <Button
-                variant="contained"
-                onClick={() =>
-                  setModal({
-                    data: null,
-                    open: true,
-                  })
-                }
-              >
-                Add New Hotel
-              </Button>
+            <Grid display="flex" justifyContent="right" item md={6}>
+              <Box>
+                <Button
+                  variant="contained"
+                  onClick={() =>
+                    setModal({
+                      data: null,
+                      open: true,
+                    })
+                  }
+                >
+                  Add New Hotel
+                </Button>
+              </Box>
             </Grid>
-          </Grid>
-
-          <Grid container spacing={2}>
             {hotelsList.map((hotel) => {
               return (
-                <Grid key={hotel.id} item md={6} style={{ padding: 0 }}>
+                <Grid
+                  key={hotel.id}
+                  item
+                  md={6}
+                  // style={{ padding: 0, width: '100%' }}
+                >
                   <Card elevation={2}>
                     <CardHeader
                       action={
@@ -108,7 +110,7 @@ const Hotels = () => {
                     <CardActionArea>
                       <CardContent>
                         <Typography variant="body2" color="text.secondary">
-                          {hotel.address}
+                          Address: {hotel.address}
                         </Typography>
                       </CardContent>
                     </CardActionArea>
