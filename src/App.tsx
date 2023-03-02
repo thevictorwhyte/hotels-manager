@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Paper, Stack } from '@mui/material';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import { routes as appRoutes } from './routes';
 
@@ -18,17 +18,15 @@ function App() {
           height="100vh"
         >
           <Sidebar />
-          <Router>
-            <Routes>
-              {appRoutes.map((route) => (
-                <Route
-                  key={route.path}
-                  path={route.path}
-                  element={<route.component />}
-                />
-              ))}
-            </Routes>
-          </Router>
+          <Routes>
+            {appRoutes.map((route) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={<route.component />}
+              />
+            ))}
+          </Routes>
         </Stack>
       </Box>
     </Paper>

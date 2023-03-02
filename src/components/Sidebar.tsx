@@ -1,3 +1,5 @@
+import { useLocation } from 'react-router-dom';
+
 import {
   Box,
   List,
@@ -11,6 +13,8 @@ import {
 import { routes } from '../routes';
 
 const Sidebar = () => {
+  const location = useLocation();
+
   return (
     <Box
       width="20%"
@@ -22,9 +26,11 @@ const Sidebar = () => {
           {routes.map((route) => {
             return (
               <ListItem key={route.key} disablePadding>
-                <ListItemButton href={route.path} component="a">
-                  {/* <ListItemIcon>
-                  </ListItemIcon> */}
+                <ListItemButton
+                  href={route.path}
+                  component="a"
+                  selected={location.pathname === route.path}
+                >
                   <ListItemText primary={route.title} />
                 </ListItemButton>
               </ListItem>

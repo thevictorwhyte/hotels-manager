@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 import {
   Box,
   Button,
@@ -10,6 +12,7 @@ import {
   TextField,
 } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material';
+import useHotels from '../../hooks/hotels/useHotels';
 
 interface IProps {
   open: boolean;
@@ -20,6 +23,7 @@ const HotelEditor = ({ open, handleClose }: IProps) => {
   const [hotelName, setHotelName] = useState('');
   const [hotelAddress, setHotelAddress] = useState('');
   const [hotelCategory, setHotelCategory] = useState('');
+  const { addNewHotel } = useHotels();
 
   const handleHotelNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -39,6 +43,12 @@ const HotelEditor = ({ open, handleClose }: IProps) => {
 
   const handleSave = () => {
     // onSave(hotelName, hotelAddress, hotelCategory);
+    addNewHotel({
+      name: hotelName,
+      address: hotelAddress,
+      id: uuidv4(),
+    });
+    handleClose();
     setHotelName('');
     setHotelAddress('');
     setHotelCategory('');
