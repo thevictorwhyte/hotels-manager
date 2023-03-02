@@ -16,12 +16,17 @@ import {
   Typography,
   CardContent,
 } from '@mui/material';
+import HotelEditor from './HotelEditor';
 
 import { SelectChangeEvent } from '@mui/material/Select';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const Hotels = () => {
   const [age, setAge] = useState('');
+  const [modal, setModal] = useState({
+    data: null,
+    open: false,
+  });
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
@@ -54,7 +59,17 @@ const Hotels = () => {
             </Select>
           </FormControl>
 
-          <Button variant="contained">Add New Hotel</Button>
+          <Button
+            variant="contained"
+            onClick={() =>
+              setModal({
+                data: null,
+                open: true,
+              })
+            }
+          >
+            Add New Hotel
+          </Button>
         </Grid>
 
         <Grid container spacing={2}>
@@ -80,6 +95,16 @@ const Hotels = () => {
           </Grid>
         </Grid>
       </Stack>
+
+      <HotelEditor
+        open={modal.open}
+        handleClose={() =>
+          setModal({
+            data: null,
+            open: false,
+          })
+        }
+      />
     </Box>
   );
 };
