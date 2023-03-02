@@ -30,7 +30,7 @@ const Categories = () => {
         </Grid>
 
         <Grid container spacing={2}>
-          <Grid item>
+          <Grid item style={{ padding: 0 }}>
             <Card elevation={2}>
               <CardHeader
                 action={

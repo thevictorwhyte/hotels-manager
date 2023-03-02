@@ -42,38 +42,42 @@ const Hotels = () => {
           display="flex"
           justifyContent="space-between"
         >
-          <FormControl sx={{ width: '200px' }}>
-            <InputLabel id="demo-simple-select-label">
-              Filter by category
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={age}
-              label="Categories"
-              onChange={handleChange}
-            >
-              <MenuItem value={10}>1 Star</MenuItem>
-              <MenuItem value={20}>2 Star</MenuItem>
-              <MenuItem value={30}>3 Star</MenuItem>
-            </Select>
-          </FormControl>
+          <Grid item>
+            <FormControl sx={{ width: '200px' }}>
+              <InputLabel id="demo-simple-select-label">
+                Filter by category
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={age}
+                label="Categories"
+                onChange={handleChange}
+              >
+                <MenuItem value={10}>1 Star</MenuItem>
+                <MenuItem value={20}>2 Star</MenuItem>
+                <MenuItem value={30}>3 Star</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
 
-          <Button
-            variant="contained"
-            onClick={() =>
-              setModal({
-                data: null,
-                open: true,
-              })
-            }
-          >
-            Add New Hotel
-          </Button>
+          <Grid item>
+            <Button
+              variant="contained"
+              onClick={() =>
+                setModal({
+                  data: null,
+                  open: true,
+                })
+              }
+            >
+              Add New Hotel
+            </Button>
+          </Grid>
         </Grid>
 
         <Grid container spacing={2}>
-          <Grid item>
+          <Grid item style={{ padding: 0 }}>
             <Card elevation={2}>
               <CardHeader
                 action={

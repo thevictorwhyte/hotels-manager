@@ -8,7 +8,6 @@ import {
   Modal,
   Select,
   TextField,
-  Typography,
 } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material';
 
@@ -81,9 +80,20 @@ const HotelEditor = ({ open, handleClose }: IProps) => {
           </Select>
         </FormControl>
         <br />
-        <Button variant="contained" color="primary" onClick={handleSave}>
-          Save
-        </Button>
+        <Box
+          display="flex"
+          justifyContent="end"
+          gap={2}
+          alignItems="end"
+          width="100%"
+        >
+          <Button variant="outlined" color="primary" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button variant="contained" color="primary" onClick={handleSave}>
+            Save
+          </Button>
+        </Box>
       </Box>
     </Modal>
   );
