@@ -1,5 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { addCategory } from '../../redux/categories/reducer';
+import {
+  addCategory,
+  deleteCategory,
+  editCategory,
+} from '../../redux/categories/reducer';
 import { selectCatgories } from '../../redux/categories/selectors';
 import { ICategory } from '../../redux/categories/typings';
 
@@ -11,9 +15,19 @@ const useCategories = () => {
     dispatch(addCategory(category));
   };
 
+  const editExistingCategory = (category: ICategory) => {
+    dispatch(editCategory(category));
+  };
+
+  const deleteExistingCategory = (category: ICategory) => {
+    dispatch(deleteCategory(category));
+  };
+
   return {
     categories,
     addNewCategory,
+    editExistingCategory,
+    deleteExistingCategory,
   };
 };
 

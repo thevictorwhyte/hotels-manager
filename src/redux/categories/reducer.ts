@@ -20,10 +20,20 @@ const categoriesSlice = createSlice({
         (category) => category.id !== action.payload.id
       );
     },
+    editCategory: (state, action: PayloadAction<ICategory>) => {
+      const { id, name } = action.payload;
+      const categoryIndex = state.categories.findIndex(
+        (category) => category.id === id
+      );
+      if (categoryIndex !== -1) {
+        state.categories[categoryIndex] = { id, name };
+      }
+    },
   },
 });
 
-export const { addCategory, deleteCategory } = categoriesSlice.actions;
+export const { addCategory, deleteCategory, editCategory } =
+  categoriesSlice.actions;
 
 const categoriesReducer = categoriesSlice.reducer;
 const persistConfig = {
