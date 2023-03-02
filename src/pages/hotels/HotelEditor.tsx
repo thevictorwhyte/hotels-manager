@@ -28,7 +28,7 @@ const HotelEditor = ({ open, handleClose, data }: IProps) => {
   const [hotelCategory, setHotelCategory] = useState<
     ICategory | null | undefined
   >(null);
-  const { addNewHotel, editExistingHotel } = useHotels();
+  const { addNewHotel, editExistingHotel } = useHotels({});
   const { categories, getCategory } = useCategories();
 
   const handleHotelNameChange = (

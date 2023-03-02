@@ -35,7 +35,9 @@ const Hotels = () => {
     data: null,
     open: false,
   });
-  const { hotelsList, deleteExistingHotel } = useHotels();
+  const { hotelsList, deleteExistingHotel } = useHotels({
+    categoryId: category,
+  });
   const { categories } = useCategories();
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -51,10 +53,10 @@ const Hotels = () => {
         padding: { xs: 2, md: 4 },
       }}
     >
-      {!hotelsList.length ? (
+      {!hotelsList.length && !category ? (
         <EmptyState
           message="You have not created any hotel"
-          buttonText="Create Hotel"
+          buttonText="Add New Hotel"
           onButtonClick={() => {
             setModal({ data: null, open: true });
           }}
@@ -95,6 +97,13 @@ const Hotels = () => {
                 label="Categories"
                 onChange={handleChange}
               >
+                <MenuItem
+                  onClick={() => {
+                    setCategory('');
+                  }}
+                >
+                  All
+                </MenuItem>
                 {categories.map((category) => {
                   return (
                     <MenuItem key={category.id} value={category.id}>
@@ -128,6 +137,18 @@ const Hotels = () => {
               </Button>
             </Box>
           </Grid>
+
+          {!hotelsList.length && category && (
+            <Grid item xs={12} style={{ marginTop: '2rem' }}>
+              <EmptyState
+                message="You have not created a hotel under this category"
+                buttonText="Add New Hotel"
+                onButtonClick={() => {
+                  setModal({ data: null, open: true });
+                }}
+              />
+            </Grid>
+          )}
 
           {hotelsList.map((hotel) => {
             return (

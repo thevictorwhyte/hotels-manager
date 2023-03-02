@@ -18,7 +18,7 @@ function EmptyState({ message, buttonText, onButtonClick }: EmptyStateProps) {
       height="80%"
     >
       <AddBox fontSize="large" color="action" />
-      <Typography variant="h6" color="textSecondary">
+      <Typography variant="h6" color="textSecondary" textAlign="center">
         {message}
       </Typography>
       <Button color="primary" variant="contained" onClick={onButtonClick}>

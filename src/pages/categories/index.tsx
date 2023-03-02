@@ -32,7 +32,7 @@ const Categories = () => {
       {!categories.length ? (
         <EmptyState
           message="You have not created any category"
-          buttonText="Create Category"
+          buttonText="Add New Category"
           onButtonClick={() => {
             setModal({ data: null, open: true });
           }}
