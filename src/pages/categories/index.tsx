@@ -118,7 +118,14 @@ const Category = ({
                 onClose={handleClose}
                 anchorEl={anchorEl}
               >
-                <MenuItem onClick={onMenuItemClick}>Edit Category</MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    onMenuItemClick();
+                    handleClose();
+                  }}
+                >
+                  Edit Category
+                </MenuItem>
                 <MenuItem onClick={() => deleteExistingCategory(category)}>
                   Delete Category
                 </MenuItem>

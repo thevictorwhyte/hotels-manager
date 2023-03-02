@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
@@ -13,17 +13,19 @@ import {
 } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material';
 import useHotels from '../../hooks/hotels/useHotels';
+import { IHotel } from '../../redux/hotels/typings';
 
 interface IProps {
   open: boolean;
   handleClose: () => void;
+  data: IHotel | null;
 }
 
-const HotelEditor = ({ open, handleClose }: IProps) => {
+const HotelEditor = ({ open, handleClose, data }: IProps) => {
   const [hotelName, setHotelName] = useState('');
   const [hotelAddress, setHotelAddress] = useState('');
   const [hotelCategory, setHotelCategory] = useState('');
-  const { addNewHotel } = useHotels();
+  const { addNewHotel, editExistingHotel } = useHotels();
 
   const handleHotelNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -42,17 +44,32 @@ const HotelEditor = ({ open, handleClose }: IProps) => {
   };
 
   const handleSave = () => {
-    // onSave(hotelName, hotelAddress, hotelCategory);
-    addNewHotel({
-      name: hotelName,
-      address: hotelAddress,
-      id: uuidv4(),
-    });
+    if (data) {
+      editExistingHotel({
+        ...data,
+        name: hotelName,
+        address: hotelAddress,
+      });
+    } else {
+      addNewHotel({
+        name: hotelName,
+        address: hotelAddress,
+        id: uuidv4(),
+      });
+    }
     handleClose();
     setHotelName('');
     setHotelAddress('');
     setHotelCategory('');
   };
+
+  useEffect(() => {
+    if (data) {
+      setHotelName(data.name);
+      setHotelAddress(data.address);
+    }
+  }, [data]);
+
   return (
     <Modal open={open} onClose={handleClose}>
       <Box sx={style}>

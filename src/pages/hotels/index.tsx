@@ -15,6 +15,7 @@ import {
   CardActionArea,
   Typography,
   CardContent,
+  Menu,
 } from '@mui/material';
 import HotelEditor from './HotelEditor';
 
@@ -23,14 +24,18 @@ import useHotels from '../../hooks/hotels/useHotels';
 import { SelectChangeEvent } from '@mui/material/Select';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EmptyState from '../../components/EmptyState';
+import { IHotel } from '../../redux/hotels/typings';
 
 const Hotels = () => {
   const [category, setCategory] = useState('');
-  const [modal, setModal] = useState({
+  const [modal, setModal] = useState<{
+    data: IHotel | null;
+    open: boolean;
+  }>({
     data: null,
     open: false,
   });
-  const { hotelsList } = useHotels();
+  const { hotelsList, deleteExistingHotel } = useHotels();
 
   const handleChange = (event: SelectChangeEvent) => {
     setCategory(event.target.value as string);
@@ -49,11 +54,7 @@ const Hotels = () => {
       ) : (
         <Stack direction="column" spacing={2} width="100%">
           <Grid container spacing={2}>
-            <Grid
-              item
-              md={6}
-              // style={{ padding: 0, width: '100%' }}
-            >
+            <Grid item md={6}>
               <FormControl sx={{ width: '200px' }}>
                 <InputLabel id="demo-simple-select-label">
                   Filter by category
@@ -89,33 +90,17 @@ const Hotels = () => {
             </Grid>
             {hotelsList.map((hotel) => {
               return (
-                <Grid
+                <Hotel
                   key={hotel.id}
-                  item
-                  md={6}
-                  // style={{ padding: 0, width: '100%' }}
-                >
-                  <Card elevation={2}>
-                    <CardHeader
-                      action={
-                        <IconButton aria-label="settings">
-                          <MoreVertIcon />
-                        </IconButton>
-                      }
-                      title={<Typography variant="h6">{hotel.name}</Typography>}
-                      subheader={
-                        <Typography variant="caption">Nigeria</Typography>
-                      }
-                    />
-                    <CardActionArea>
-                      <CardContent>
-                        <Typography variant="body2" color="text.secondary">
-                          Address: {hotel.address}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Grid>
+                  onMenuItemClick={() =>
+                    setModal({
+                      data: hotel,
+                      open: true,
+                    })
+                  }
+                  deleteExistingHotel={deleteExistingHotel}
+                  hotel={hotel}
+                />
               );
             })}
           </Grid>
@@ -124,6 +109,7 @@ const Hotels = () => {
 
       <HotelEditor
         open={modal.open}
+        data={modal.data}
         handleClose={() =>
           setModal({
             data: null,
@@ -132,6 +118,72 @@ const Hotels = () => {
         }
       />
     </Box>
+  );
+};
+
+interface IHotelProps {
+  hotel: IHotel;
+  onMenuItemClick: () => void;
+  deleteExistingHotel: (x: IHotel) => void;
+}
+
+const Hotel = ({
+  hotel,
+  onMenuItemClick,
+  deleteExistingHotel,
+}: IHotelProps) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClickVertIcon = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <Grid md={6} item>
+      <Card elevation={2}>
+        <CardHeader
+          action={
+            <div>
+              <IconButton aria-label="settings" onClick={handleClickVertIcon}>
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                open={open}
+                key={hotel.id}
+                id={`cateogries-menu-${hotel.id}`}
+                onClose={handleClose}
+                anchorEl={anchorEl}
+              >
+                <MenuItem
+                  onClick={() => {
+                    onMenuItemClick();
+                    handleClose();
+                  }}
+                >
+                  Edit Category
+                </MenuItem>
+                <MenuItem onClick={() => deleteExistingHotel(hotel)}>
+                  Delete Category
+                </MenuItem>
+              </Menu>
+            </div>
+          }
+          title={<Typography variant="h6">{hotel.name}</Typography>}
+        />
+        <CardActionArea>
+          <CardContent>
+            <Typography variant="body2" color="text.secondary">
+              Address: {hotel.address}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </Grid>
   );
 };
 

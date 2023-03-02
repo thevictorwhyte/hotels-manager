@@ -20,10 +20,18 @@ const hotelsSlice = createSlice({
         (hotel) => hotel.id !== action.payload.id
       );
     },
+    editHotel: (state, action: PayloadAction<IHotel>) => {
+      const hotelIndex = state.hotels.findIndex(
+        (hotel) => hotel.id === action.payload.id
+      );
+      if (hotelIndex !== -1) {
+        state.hotels[hotelIndex] = action.payload;
+      }
+    },
   },
 });
 
-export const { addHotel, deleteHotel } = hotelsSlice.actions;
+export const { addHotel, deleteHotel, editHotel } = hotelsSlice.actions;
 
 const hotelsReducer = hotelsSlice.reducer;
 const persistConfig = {
