@@ -18,7 +18,7 @@ export const routes: Route[] = [
   {
     key: 'hotels',
     title: 'Hotels',
-    path: '/hotels',
+    path: '/',
     enabled: true,
     component: Hotels,
     icon: HotelIcon,
