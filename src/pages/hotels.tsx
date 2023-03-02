@@ -2,29 +2,31 @@ import { useState } from 'react';
 
 import {
   Box,
+  Stack,
+  Grid,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
   Button,
   Card,
-  CardActionArea,
-  CardContent,
   CardHeader,
-  FormControl,
-  Grid,
   IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
+  CardActionArea,
   Typography,
+  CardContent,
 } from '@mui/material';
+
 import { SelectChangeEvent } from '@mui/material/Select';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-const Main = () => {
+const Hotels = () => {
   const [age, setAge] = useState('');
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
   };
+
   return (
     <Box p={4} sx={{ flexGrow: 1, maxWidth: 1000 }}>
       <Stack direction="column" spacing={2} width="100%">
@@ -56,7 +58,7 @@ const Main = () => {
         </Grid>
 
         <Grid container spacing={2}>
-          <Grid>
+          <Grid item>
             <Card elevation={2}>
               <CardHeader
                 action={
@@ -82,4 +84,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Hotels;

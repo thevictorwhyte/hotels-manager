@@ -4,11 +4,11 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
-  ListItemIcon,
   Paper,
+  // Link,
 } from '@mui/material';
-import HotelIcon from '@mui/icons-material/Hotel';
-import CategoryIcon from '@mui/icons-material/Category';
+
+import { routes } from '../routes';
 
 const Sidebar = () => {
   return (
@@ -19,23 +19,17 @@ const Sidebar = () => {
     >
       <Paper elevation={0} sx={{ maxWidth: 256 }}>
         <List>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <HotelIcon />
-              </ListItemIcon>
-              <ListItemText primary="Hotels" />
-            </ListItemButton>
-          </ListItem>
-
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <CategoryIcon />
-              </ListItemIcon>
-              <ListItemText primary="Categories" />
-            </ListItemButton>
-          </ListItem>
+          {routes.map((route) => {
+            return (
+              <ListItem key={route.key} disablePadding>
+                <ListItemButton href={route.path} component="a">
+                  {/* <ListItemIcon>
+                  </ListItemIcon> */}
+                  <ListItemText primary={route.title} />
+                </ListItemButton>
+              </ListItem>
+            );
+          })}
         </List>
       </Paper>
     </Box>

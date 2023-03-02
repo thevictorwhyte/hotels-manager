@@ -1,9 +1,10 @@
 import React from 'react';
 import { Box, Paper, Stack } from '@mui/material';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import { routes as appRoutes } from './routes';
 
 import Sidebar from './components/Sidebar';
-import Main from './components/Main';
-import Navbar from './components/Navbar';
 
 function App() {
   return (
@@ -17,7 +18,17 @@ function App() {
           height="100vh"
         >
           <Sidebar />
-          <Main />
+          <Router>
+            <Routes>
+              {appRoutes.map((route) => (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={<route.component />}
+                />
+              ))}
+            </Routes>
+          </Router>
         </Stack>
       </Box>
     </Paper>
