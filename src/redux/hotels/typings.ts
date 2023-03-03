@@ -7,4 +7,5 @@ export interface IHotel {
   name: string;
   address: string;
   category?: string | null;
+  country: string;
 }

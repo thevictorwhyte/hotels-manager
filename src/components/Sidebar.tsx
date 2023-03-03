@@ -7,7 +7,6 @@ import {
   ListItemButton,
   ListItemText,
   Paper,
-  // Link,
 } from '@mui/material';
 
 import { routes } from '../routes';

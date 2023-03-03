@@ -22,7 +22,6 @@ const CategoryEditor = ({ open, handleClose, data }: IProps) => {
   };
 
   const handleSave = () => {
-    // onSave(hotelName, hotelAddress, hotelCategory);
     if (data) {
       editExistingCategory({
         name: categoryName,

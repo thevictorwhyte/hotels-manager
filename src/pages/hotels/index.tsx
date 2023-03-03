@@ -20,6 +20,7 @@ import HotelEditor from './HotelEditor';
 
 import useHotels from '../../hooks/hotels/useHotels';
 import useCategories from '../../hooks/categories/useCategories';
+import useCountriesGet from '../../hooks/country/useCountriesGet';
 
 import { SelectChangeEvent } from '@mui/material/Select';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -39,6 +40,7 @@ const Hotels = () => {
     categoryId: category,
   });
   const { categories } = useCategories();
+  const { countries } = useCountriesGet();
 
   const handleChange = (event: SelectChangeEvent) => {
     setCategory(event.target.value as string);
@@ -177,6 +179,7 @@ const Hotels = () => {
             open: false,
           })
         }
+        countries={countries}
       />
     </Box>
   );
@@ -245,6 +248,9 @@ const Hotel = ({
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Address: {hotel.address}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Country: {hotel?.country}
             </Typography>
           </CardContent>
         </CardActionArea>

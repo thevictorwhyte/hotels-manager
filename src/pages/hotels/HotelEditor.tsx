@@ -10,6 +10,7 @@ import {
   Modal,
   Select,
   TextField,
+  Autocomplete,
 } from '@mui/material';
 import useHotels from '../../hooks/hotels/useHotels';
 import { IHotel } from '../../redux/hotels/typings';
@@ -20,14 +21,16 @@ interface IProps {
   open: boolean;
   handleClose: () => void;
   data: IHotel | null;
+  countries: string[];
 }
 
-const HotelEditor = ({ open, handleClose, data }: IProps) => {
+const HotelEditor = ({ open, handleClose, data, countries }: IProps) => {
   const [hotelName, setHotelName] = useState('');
   const [hotelAddress, setHotelAddress] = useState('');
   const [hotelCategory, setHotelCategory] = useState<
     ICategory | null | undefined
   >(null);
+  const [hotelCountry, setHotelCountry] = useState('');
   const { addNewHotel, editExistingHotel } = useHotels({});
   const { categories, getCategory } = useCategories();
 
@@ -50,6 +53,7 @@ const HotelEditor = ({ open, handleClose, data }: IProps) => {
         name: hotelName,
         address: hotelAddress,
         category: hotelCategory?.id,
+        country: hotelCountry,
       });
     } else {
       addNewHotel({
@@ -57,17 +61,17 @@ const HotelEditor = ({ open, handleClose, data }: IProps) => {
         address: hotelAddress,
         id: uuidv4(),
         category: hotelCategory?.id,
+        country: hotelCountry,
       });
     }
     handleClose();
-    setHotelName('');
-    setHotelAddress('');
-    setHotelCategory(null);
+    reset();
   };
   const reset = () => {
     setHotelName('');
     setHotelAddress('');
     setHotelCategory(null);
+    setHotelCountry('');
   };
   const closeModal = () => {
     reset();
@@ -79,6 +83,7 @@ const HotelEditor = ({ open, handleClose, data }: IProps) => {
       setHotelName(data.name);
       setHotelAddress(data.address);
       setHotelCategory(getCategory(data?.category || ''));
+      setHotelCountry(data.country);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
@@ -126,6 +131,18 @@ const HotelEditor = ({ open, handleClose, data }: IProps) => {
           </Select>
         </FormControl>
         <br />
+        <Autocomplete
+          onChange={(event, newValue) => {
+            setHotelCountry(newValue as string);
+          }}
+          disablePortal
+          id="hotel-country"
+          options={countries}
+          value={hotelCountry}
+          sx={{ width: '100%' }}
+          renderInput={(params) => <TextField {...params} label="Country" />}
+        />
+        <br />
         <Box
           display="flex"
           justifyContent="end"
@@ -137,7 +154,9 @@ const HotelEditor = ({ open, handleClose, data }: IProps) => {
             Cancel
           </Button>
           <Button
-            disabled={!hotelName || !hotelAddress || !hotelCategory}
+            disabled={
+              !hotelName || !hotelAddress || !hotelCategory || !hotelCountry
+            }
             variant="contained"
             color="primary"
             onClick={handleSave}

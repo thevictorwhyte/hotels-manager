@@ -3,8 +3,6 @@ import Categories from './pages/categories';
 import HotelIcon from '@mui/icons-material/Hotel';
 import CategoryIcon from '@mui/icons-material/Category';
 
-// import { ReactNode } from 'react';
-
 interface Route {
   key: string;
   title: string;

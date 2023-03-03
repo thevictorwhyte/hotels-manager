@@ -45,6 +45,7 @@ const Navbar = () => {
         {routes.map((route) => {
           return (
             <MenuItem
+              key={route.key}
               onClick={() => navigate(`${route.path}`)}
               selected={location.pathname === route.path}
             >
