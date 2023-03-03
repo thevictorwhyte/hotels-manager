@@ -7,6 +7,7 @@ import {
   ListItemButton,
   ListItemText,
   Paper,
+  Typography,
 } from '@mui/material';
 
 import { routes } from '../routes';
@@ -22,6 +23,7 @@ const Sidebar = () => {
       sx={{ display: { xs: 'none', lg: 'block' }, height: '100%' }}
     >
       <Paper elevation={0} sx={{ maxWidth: 256 }}>
+        <Typography p={2}>Hotels Manager</Typography>
         <List>
           {routes.map((route) => {
             return (
