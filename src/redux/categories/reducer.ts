@@ -5,7 +5,20 @@ import { persistReducer } from 'redux-persist';
 import { ICategoriesState, ICategory } from './typings';
 
 const initialState: ICategoriesState = {
-  categories: [],
+  categories: [
+    {
+      id: '1',
+      name: '1 Star',
+    },
+    {
+      id: '2',
+      name: '2 Star',
+    },
+    {
+      id: '3',
+      name: '3 Star',
+    },
+  ],
 };
 
 const categoriesSlice = createSlice({
